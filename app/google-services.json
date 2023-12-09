@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393039672995",
+    "project_id": "trey-q-ae7a3",
+    "storage_bucket": "trey-q-ae7a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393039672995:android:4c7a9c2cdb5bdc10d73116",
+        "android_client_info": {
+          "package_name": "com.devkaybee.treyq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP9kulmKTCjXpTTJxALvmWTUxMhO-PeQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
