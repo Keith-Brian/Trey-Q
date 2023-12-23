@@ -5,55 +5,88 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.devkaybee.treyq.ViewModel.MqttViewModel
+import com.devkaybee.treyq.databinding.FragmentStatusBinding
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
+import com.google.firebase.database.DatabaseReference
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class StatusFragment : Fragment(R.layout.fragment_status) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StatusFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class StatusFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var hour: String? =null
+    private var min: String? =null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var statusScreen: FragmentStatusBinding
+    private lateinit var mqttViewModel: MqttViewModel
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        statusScreen = FragmentStatusBinding.bind(view)
+
+
+        mqttViewModel = ViewModelProvider(this).get(MqttViewModel::class.java)
+        //connecting to the server option
+        mqttViewModel.connect(requireContext())
+
+        // adafruitViewModel.subscribe("temp")
+
+        mqttViewModel.temp().observe(requireActivity(), Observer {
+            statusScreen.Temp.text = it
+        })
+
+        mqttViewModel.pH().observe(requireActivity(), Observer {
+            statusScreen.ph.text = it
+        })
+
+        mqttViewModel.turbidity().observe(requireActivity(), Observer {
+            statusScreen.turbidity.text = it
+        })
+
+        mqttViewModel.status().observe(requireActivity(), Observer {
+            statusScreen.status.text = it
+        })
+
+        statusScreen.fabSetTime.setOnClickListener {
+            openTimePicker()
+        }
+
+        statusScreen.normalPH.setOnClickListener {
+
+            mqttViewModel.publish("wapH", "normal",1)
+
+        }
+
+        statusScreen.extremePH.setOnClickListener {
+
+            mqttViewModel.publish("wapH", "extreme",1)
+
+        }
+
+
+    }
+
+    private fun openTimePicker() {
+        val timePicker = MaterialTimePicker.Builder()
+            .setTimeFormat(CLOCK_24H)
+            .setHour(12)
+            .setMinute(40)
+            .setTitleText("SCHEDULE MONITORING!")
+            .build()
+        timePicker.show(childFragmentManager,"TAG")
+
+        timePicker.addOnPositiveButtonClickListener {
+            hour = timePicker.hour.toString()
+            min = timePicker.minute.toString()
+
+            Toast.makeText(requireContext(), "Monitoring Scheduled at: ${hour.plus(":").plus(min)}", Toast.LENGTH_SHORT).show()
+
+            mqttViewModel.publish("hour", hour!!,1)
+            mqttViewModel.publish("min", min!!,1)
         }
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_status, container, false)
     }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StatusFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StatusFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-}

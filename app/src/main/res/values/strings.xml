@@ -6,4 +6,5 @@
     <string name="temperature">Temperature</string>
     <string name="null_zero">0.0</string>
     <string name="none">none</string>
+    <string name="account_info">Account Info</string>
 </resources>

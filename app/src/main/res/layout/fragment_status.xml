@@ -36,7 +36,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_password" />
+            android:src="@drawable/lupita_dummy" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,6 +61,7 @@
             android:layout_marginEnd="5dp"/>
 
         <GridLayout
+            android:id="@+id/statusGrid"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_below="@id/homeBar"
@@ -97,6 +98,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/extremePH"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
@@ -145,6 +147,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/normalPH"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
@@ -153,7 +156,7 @@
                         android:contentDescription="@string/none" />
 
                     <TextView
-                        android:id="@+id/humid"
+                        android:id="@+id/ph"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -201,7 +204,7 @@
                         android:src="@drawable/water" />
 
                     <TextView
-                        android:id="@+id/moist"
+                        android:id="@+id/turbidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -249,7 +252,7 @@
                         android:src="@drawable/status" />
 
                     <TextView
-                        android:id="@+id/concen"
+                        android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -263,8 +266,18 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
         </GridLayout>
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSetTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/ic_time"
+        app:backgroundTint="@color/green"
+        android:layout_marginEnd="30dp"/>
 
 </RelativeLayout>

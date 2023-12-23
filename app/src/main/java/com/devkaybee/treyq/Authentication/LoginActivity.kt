@@ -1,7 +1,9 @@
 package com.devkaybee.treyq.Authentication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.devkaybee.treyq.Dashboard.DashboardActivity
 import com.devkaybee.treyq.R
 import com.devkaybee.treyq.Utils.Viewutils.Extensions.toast
 import com.devkaybee.treyq.databinding.ActivityLoginBinding
@@ -42,6 +44,11 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this){
                 if (it.isSuccessful){
                     toast("Login Successful")
+
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                 }else{
                     toast("Login Failed!l")
                 }
